@@ -28,39 +28,38 @@ exports.register = async (req,res,next)=>{
 //@desc     Login user
 //@route    POST /api/v1/auth/login
 //@access   Public
-exports.login = async (req,res,next) =>{
-    try{
-    const {email,password} = req.body;
+exports.login = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
 
-    //Validate email & password
-    if(!email || !password){
-        console.log('Please provide an email and password');
-        return res.status(400).json({success:false,msg:'Please provide an email and password'});
-    }
+        //Validate email & password
+        if (!email || !password) {
+            console.log('Please provide an email and password');
+            return res.status(400).json({ success: false, msg: 'Please provide an email and password' });
+        }
 
-    //Check for user
-    const user = await User.findOne({ email }).select('+password role');
+        //Check for user
+        const user = await User.findOne({ email }).select('+password role');
 
-    if(!user){
-        console.log('no user');
-        return res.status(400).json({success:false,msg:'Invalid credentials'});
-    }
+        if (!user) {
+            console.log('no user');
+            return res.status(400).json({ success: false, msg: 'Invalid credentials' });
+        }
 
-    //Check if password matches
-    const isMatch = await user.matchPassword(password);
-    if(!isMatch){
-        console.log('Invalid credentials');
-        return res.status(400).json({success:false,msg:'Invalid credentials'});
-    }
+        //Check if password matches
+        const isMatch = await user.matchPassword(password);
+        if (!isMatch) {
+            console.log('Invalid credentials');
+            return res.status(400).json({ success: false, msg: 'Invalid credentials' });
+        }
 
-    //Create token
-    //const token = user.getSignedJwtToken();
-    //res.status(200).json({success:true,token});
-    sendTokenResponse(user,200,res);
-    } catch (err){
-        res.status(401).json({success:false, msg:'Cannot convert email or password to string'});
+        // Send token and user data (including role)
+        sendTokenResponse(user, 200, res);
+    } catch (err) {
+        res.status(401).json({ success: false, msg: 'Cannot convert email or password to string' });
     }
 };
+
 
 //Get token from model,create cookie and send response
 const sendTokenResponse = (user,statusCode,res)=>{
@@ -81,6 +80,7 @@ const sendTokenResponse = (user,statusCode,res)=>{
         token,
         email: user.email,
         name: user.name,
+        role: user.role,
         createdAt: user.createdAt,
     })
 }
