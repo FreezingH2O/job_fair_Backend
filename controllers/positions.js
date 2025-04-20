@@ -1,5 +1,6 @@
 const Position = require('../models/Position');
 const Company = require('../models/Company');
+const Interview = require('../models/Interview');
 
 // @desc    Get all positions
 // @route   GET /api/v1/positions
@@ -130,6 +131,7 @@ exports.updatePosition = async (req, res, next) => {
     }
 };
 
+
 // @desc    Delete a position
 // @route   DELETE /api/v1/positions/:id
 // @access  Private
@@ -144,6 +146,10 @@ exports.deletePosition = async (req, res, next) => {
             });
         }
 
+        // 🔥 Delete interviews linked to this position
+        await Interview.deleteMany({ position: req.params.id });
+
+        // ❌ Then delete the position itself
         await position.deleteOne();
 
         res.status(200).json({
@@ -158,3 +164,4 @@ exports.deletePosition = async (req, res, next) => {
         });
     }
 };
+

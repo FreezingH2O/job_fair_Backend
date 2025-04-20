@@ -1,5 +1,7 @@
 const Company = require('../models/Company');
 const Interview = require('../models/Interview');
+const Position = require('../models/Position');
+
 //@desc     Get all companies
 //@route    GET /api/v1/companies
 //@access   Public
@@ -134,15 +136,16 @@ exports.deleteCompany = async (req,res,next) =>{
                 message: `Company not found with id of ${req.params.id}`
             });
         }
-        await Interview.deleteMany({company:req.params.id});
-        await company.deleteOne({_id:req.params.id});
 
-        res.status(200).json({success:true, data:{}});
+        await Interview.deleteMany({ company: req.params.id });
+        await Position.deleteMany({ company: req.params.id }); 
+        await company.deleteOne({ _id: req.params.id });
+
+        res.status(200).json({ success: true, data: {} });
     } catch(err){
-        res.status(400).json({success:false});
+        res.status(400).json({ success: false });
     }
 };
-
 
 
 ///get all tags
