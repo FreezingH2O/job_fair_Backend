@@ -146,10 +146,9 @@ exports.deletePosition = async (req, res, next) => {
             });
         }
 
-        // 🔥 Delete interviews linked to this position
         await Interview.deleteMany({ position: req.params.id });
 
-        // ❌ Then delete the position itself
+    
         await position.deleteOne();
 
         res.status(200).json({

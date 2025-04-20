@@ -17,6 +17,10 @@ exports.getInterviews = async (req, res, next) => {
             .populate({
                 path: 'position',
                 select: 'title description'
+            })
+            .populate({
+                path: 'user',
+                select: 'email name'
             });
     } else {
         // Admins can see interviews by company or all
@@ -29,6 +33,10 @@ exports.getInterviews = async (req, res, next) => {
                 .populate({
                     path: 'position',
                     select: 'title description'
+                })
+                .populate({
+                    path: 'user',
+                    select: 'email name'
                 });
         } else {
             query = Interview.find()
@@ -39,6 +47,10 @@ exports.getInterviews = async (req, res, next) => {
                 .populate({
                     path: 'position',
                     select: 'title description'
+                })
+                .populate({
+                    path: 'user',
+                    select: 'email name'
                 });
         }
     }
@@ -74,6 +86,10 @@ exports.getInterview = async(req,res,next)=>{
         .populate({
             path: 'position',
             select: 'title description'
+        })
+        .populate({
+            path: 'user',
+            select: 'email name'
         });
 
         if(!interview){
