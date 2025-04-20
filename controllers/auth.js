@@ -39,7 +39,7 @@ exports.login = async (req, res, next) => {
         }
 
         //Check for user
-        const user = await User.findOne({ email }).select('+password role');
+        const user = await User.findOne({ email }).select('+password role name createdAt');
 
         if (!user) {
             console.log('no user');
