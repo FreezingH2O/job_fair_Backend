@@ -28,23 +28,28 @@ const PositionSchema = new mongoose.Schema({
         min: [1, 'There must be at least 1 position open']
     },
     salary: {
-        min: {
-          type: Number,
-          required: true,
-          min: [0, 'Minimum salary must be a positive number']
+        type: {
+          min: {
+            type: Number,
+            required: true,
+            min: [0, 'Minimum salary must be a positive number'],
+          },
+          max: {
+            type: Number,
+            required: true,
+            min: [0, 'Maximum salary must be a positive number'],
+          },
         },
-        max: {
-          type: Number,
-          required: true,
-          min: [0, 'Maximum salary must be a positive number'],
-          validate: {
-            validator: function (value) {
-              return value >= this.min;
-            },
-            message: 'Maximum salary must be greater than or equal to minimum salary'
-          }
-        }
+        required: true,
+        validate: {
+          validator: function (value) {
+            return value.max >= value.min;
+          },
+          message: 'Maximum salary must be greater than or equal to minimum salary',
+        },
       }
+      
+      
 ,       
     workArrangement: {
         type: String,

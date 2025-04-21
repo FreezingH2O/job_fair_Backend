@@ -72,7 +72,9 @@ exports.getPosition = async (req, res, next) => {
 // @route   POST /api/v1/companies/:companyId/positions
 // @access  Private
 exports.createPosition = async (req, res, next) => {
+    
     try {
+
         const company = await Company.findById(req.params.companyId);
 
         if (!company) {
@@ -85,6 +87,7 @@ exports.createPosition = async (req, res, next) => {
         req.body.company = req.params.companyId;
 
         const position = await Position.create(req.body);
+       
 
         res.status(201).json({
             success: true,
