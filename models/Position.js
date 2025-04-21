@@ -18,11 +18,20 @@ const PositionSchema = new mongoose.Schema({
         default: [],
         maxlength: [50, 'Too many requirements']
     },
+    skill: {
+        type: [String],
+        default: []
+    },
     openingPosition: {
         type: Number,
         required: true,
         min: [1, 'There must be at least 1 position open']
-    },    
+    },
+    salary: {
+        type: Number,
+        required: true,
+        min: [0, 'Salary must be positive number']
+    },   
     workArrangement: {
         type: String,
         enum: ['On-site', 'Remote', 'Hybrid'],
