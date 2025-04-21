@@ -164,3 +164,40 @@ exports.deletePosition = async (req, res, next) => {
     }
 };
 
+///get all skill
+// GET /api/v1/positions/skill
+exports.getAllSkill = async (req, res, next) => {
+    try {
+        const result = await Position.aggregate([
+            { $unwind: "$skill" },
+            {
+              $group: {
+                _id: { $toLower: "$skill" },
+                originalTag: { $first: "$skill" } // Keep original casing
+              }
+            },
+            {
+              $group: {
+                _id: null,
+                skill: { $addToSet: "$originalTag" }
+              }
+            },
+            { $project: { _id: 0, skill: 1 } }
+          ]);
+          
+          const skill = result[0]?.skill || [];
+          
+
+        res.status(200).json({
+            success: true,
+            count: skill.length,
+            data: skill
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to fetch skill'
+        });
+    }
+};

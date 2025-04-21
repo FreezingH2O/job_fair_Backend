@@ -4,13 +4,15 @@ const {
     getPosition,
     createPosition,
     updatePosition,
-    deletePosition
+    deletePosition,
+    getAllSkill
 } = require('../controllers/positions');
 
 const {protect,authorize} = require('../middleware/auth');
 
 const router = express.Router({ mergeParams: true });
 
+router.get('/skills', getAllSkill); 
 router.route('/').get(getPositions).post(protect,authorize('admin'),createPosition);
 router.route('/:id')
     .get(getPosition)
