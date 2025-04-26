@@ -39,10 +39,6 @@ const CompanySchema = new mongoose.Schema({
             'Please use a valid URL for the logo image'
         ]
     },
-    about: {
-        type: String,
-        maxlength: [1000, 'About section cannot be more than 1000 characters']
-    },
     companySize: {
         type: String,
         enum: [

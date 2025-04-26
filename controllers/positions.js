@@ -22,7 +22,7 @@ exports.getPositions = async (req, res, next) => {
             });
         }
 
-        const positions = await query;
+        const positions = await query.sort({title:1});
 
         res.status(200).json({
             success: true,
@@ -189,6 +189,7 @@ exports.getAllSkill = async (req, res, next) => {
           ]);
           
           const skill = result[0]?.skill || [];
+          skill = skill.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
           
 
         res.status(200).json({

@@ -56,7 +56,7 @@ exports.getInterviews = async (req, res, next) => {
     }
 
     try {
-        const interviews = await query;
+        const interviews = await query.sort({ interviewDate: 1 });
 
         res.status(200).json({
             success: true,
