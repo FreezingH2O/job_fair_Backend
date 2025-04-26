@@ -16,7 +16,7 @@ exports.getInterviews = async (req, res, next) => {
             })
             .populate({
                 path: 'position',
-                select: 'title description'
+                select: 'title description interviewStart interviewEnd'
             })
             .populate({
                 path: 'user',
@@ -67,7 +67,7 @@ exports.getInterviews = async (req, res, next) => {
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: 'Cannot find Interview'
+            message: error
         });
     }
 };
@@ -107,7 +107,7 @@ exports.getInterview = async(req,res,next)=>{
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: 'Cannot find Interview'
+            message: error
         });
     }
 };
@@ -173,7 +173,7 @@ exports.createInterview = async (req, res, next) => {
         console.error(error);
         return res.status(500).json({
             success: false,
-            message: 'Cannot create Interview'
+            message: error
         });
     }
 };
@@ -214,7 +214,7 @@ exports.updateInterview = async(req,res,next)=>{
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: 'Cannot update Interview'
+            message: error
         });
     }
 };
@@ -251,7 +251,7 @@ exports.deleteInterview = async(req,res,next)=>{
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: 'Cannot delete Interview'
+            message: error
         });
     }
 };
