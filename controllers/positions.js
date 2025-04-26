@@ -188,7 +188,7 @@ exports.getAllSkill = async (req, res, next) => {
             { $project: { _id: 0, skill: 1 } }
           ]);
           
-          const skill = result[0]?.skill || [];
+          let skill = result[0]?.skill || []; // <-- use let instead of const
           skill = skill.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
           
 
