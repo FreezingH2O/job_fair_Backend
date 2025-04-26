@@ -32,7 +32,7 @@ exports.getInterviews = async (req, res, next) => {
                 })
                 .populate({
                     path: 'position',
-                    select: 'title description'
+                select: 'title description interviewStart interviewEnd'
                 })
                 .populate({
                     path: 'user',
@@ -46,7 +46,7 @@ exports.getInterviews = async (req, res, next) => {
                 })
                 .populate({
                     path: 'position',
-                    select: 'title description'
+                select: 'title description interviewStart interviewEnd'
                 })
                 .populate({
                     path: 'user',
@@ -85,7 +85,7 @@ exports.getInterview = async(req,res,next)=>{
         })
         .populate({
             path: 'position',
-            select: 'title description'
+                select: 'title description interviewStart interviewEnd'
         })
         .populate({
             path: 'user',
