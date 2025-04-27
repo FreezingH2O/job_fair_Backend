@@ -83,7 +83,7 @@ const swaggerOptions ={
         },
         servers:[
             {
-                url: process.env.HOST + ':' + PORT + '/api/v1'
+                url: 'http://localhost:5001'
             }
         ],
     },
