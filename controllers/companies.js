@@ -147,7 +147,16 @@ exports.deleteCompany = async (req,res,next) =>{
             });
         }
 
-        await Interview.deleteMany({ company: req.params.id });
+
+        const existingInterviews = await Interview.findOne({ company: req.params.id });
+
+        if (existingInterviews) {
+          return res.status(400).json({
+            success: false,
+            message: `Cannot delete company. There are active interviews associated with this company.`
+          });
+        }
+
         await Position.deleteMany({ company: req.params.id }); 
         await company.deleteOne({ _id: req.params.id });
 

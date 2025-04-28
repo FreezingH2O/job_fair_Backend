@@ -149,7 +149,15 @@ exports.deletePosition = async (req, res, next) => {
             });
         }
 
-        await Interview.deleteMany({ position: req.params.id });
+        const existingInterviews = await Interview.findOne({ position: req.params.id });
+
+    if (existingInterviews) {
+      return res.status(400).json({
+        success: false,
+        message: `Cannot delete position. There are active interviews associated with this position.`
+      });
+    }
+
 
     
         await position.deleteOne();
